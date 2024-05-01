@@ -39,13 +39,15 @@
                     <br>
                     <br>
                     <h2 class="text-center">Project Progress</h2>
-                    <form action="project_progress.php" method="post" id="projectForm">
+                    <form action="src\project_progress.php" method="post" id="projectForm">
                         <div class="mb-3">
+                            
                             <label for="project" class="form-label">Project</label>
                             <select class="form-select" id="project" name="project"></select>
                         </div>
                         <div class="mb-3">
                             <label for="periodFrom" class="form-label">Date</label>
+                            
                             <input type="date" class="form-control" id="date" name="date">
                         </div>
                         <div class="mb-3">
@@ -76,26 +78,32 @@
                             <button type="submit" class="btn btn-primary">Submit</button>
                         </div>
                     </form>
+                    
                 </div>
             </div>
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script>
-        $(document).ready(function() {
+        document.getElementById('project').addEventListener('click', 
+            function handler() {
+                this.removeEventListener('click', handler);
             $.ajax({
-                url: "fetch_projects.php",
+                url: "src/fetch_projects.php",
                 type: "GET",
                 dataType: "json",
                 success: function(data) {
+                    console.log('success');
                     var select = $("#project");
                     select.empty();
                     $.each(data, function(index, value) {
-                        select.append('<option value="' + value.project + '">' + value.project + '</option>');
+                        select.append('<option value="' + value.projName + '">' + value.projName + '</option>');
                     });
                 },
                 error: function(xhr, status, error) {
                     console.log(error);
+                    console.log('failure');
                 }
             });
         });
